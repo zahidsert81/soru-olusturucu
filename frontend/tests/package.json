@@ -1,0 +1,17 @@
+{
+  "name": "soru-olusturucu-tests",
+  "version": "1.0.0",
+  "description": "Frontend Tests",
+  "scripts": {
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "coverage": "vitest --coverage"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.1.0",
+    "@testing-library/jest-dom": "^6.1.5",
+    "@vitest/ui": "^1.0.4",
+    "vitest": "^1.0.4",
+    "jsdom": "^23.0.1"
+  }
+}

@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: soru-olusturucu-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./uploads:/app/uploads
+      - ./outputs:/app/outputs
+      - ./data:/app/data
+    environment:
+      - FASTAPI_ENV=production
+      - DATABASE_URL=sqlite:///./soru_olusturucu.db
+      - DEBUG=False
+    command: uvicorn app:app --host 0.0.0.0 --port 8000
+    restart: unless-stopped
+    networks:
+      - soru-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: soru-olusturucu-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    restart: unless-stopped
+    networks:
+      - soru-network
+
+volumes:
+  uploads:
+  outputs:
+  data:
+
+networks:
+  soru-network:
+    driver: bridge
